@@ -29,7 +29,7 @@ const server = http.createServer(app);
 // Configure CORS
 const io = socketIo(server, {
   cors: {
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN || "https://realtimeticktockapp-client.onrender.com",
     methods: ["GET", "POST"],
     credentials: true,
   },
