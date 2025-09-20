@@ -10,7 +10,7 @@ const connectDB = require("./config/database");
 // Set default environment variables if not provided
 process.env.PORT = process.env.PORT || "5000";
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
-process.env.CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
+process.env.CORS_ORIGIN = process.env.CORS_ORIGIN || "https://realtimeticktockapp-client.onrender.com";
 process.env.JWT_SECRET =
   process.env.JWT_SECRET ||
   "your-super-secret-jwt-key-change-this-in-production";
