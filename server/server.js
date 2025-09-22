@@ -8,10 +8,7 @@ const rateLimit = require("express-rate-limit");
 const connectDB = require("./config/database");
 
 // Set default environment variables if not provided
-process.env.PORT = process.env.PORT || "5000";
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
-process.env.CORS_ORIGIN = process.env.CORS_ORIGIN ||https://realtimeticktockappclient.onrender.com;
-process.env.JWT_EXPIRE = process.env.JWT_EXPIRE || "7d";
+
 
 // Import routes
 const authRoutes = require("./routes/auth");
@@ -26,7 +23,7 @@ const server = http.createServer(app);
 // Configure CORS
 const io = socketIo(server, {
   cors: {
-    origin:"https://realtimeticktockappclient.onrender.com",
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -61,7 +58,7 @@ app.use(limiter);
 // CORS
 app.use(
   cors({
-    origin: "https://realtimeticktockappclient.onrender.com/login",
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
     credentials: true,
   })
 );
