@@ -6,8 +6,12 @@ import axios from "axios";
  */
 class ApiClient {
   constructor() {
+    const baseURL =
+      process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+    console.log("API Client: Base URL configured as:", baseURL);
+
     this.client = axios.create({
-      baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
+      baseURL,
       timeout: 10000,
       headers: {
         "Content-Type": "application/json",
@@ -54,8 +58,27 @@ class ApiClient {
    * @returns {Promise<Object>} API response with user data and token
    */
   async register(credentials) {
-    const response = await this.client.post("/auth/register", credentials);
-    return response.data;
+    console.log(
+      "API Client: Attempting registration with URL:",
+      this.client.defaults.baseURL + "/auth/register"
+    );
+    console.log("API Client: Registration credentials:", {
+      ...credentials,
+      password: "[HIDDEN]",
+    });
+
+    try {
+      const response = await this.client.post("/auth/register", credentials);
+      console.log("API Client: Registration successful:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("API Client: Registration failed:", error);
+      console.error(
+        "API Client: Full URL attempted:",
+        this.client.defaults.baseURL + "/auth/register"
+      );
+      throw error;
+    }
   }
 
   /**
@@ -180,8 +203,18 @@ class ApiClient {
    * @returns {Promise<Object>} API response
    */
   async healthCheck() {
-    const response = await this.client.get("/health");
-    return response.data;
+    console.log(
+      "API Client: Checking server health at:",
+      this.client.defaults.baseURL + "/health"
+    );
+    try {
+      const response = await this.client.get("/health");
+      console.log("API Client: Health check successful:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("API Client: Health check failed:", error);
+      throw error;
+    }
   }
 }
 
