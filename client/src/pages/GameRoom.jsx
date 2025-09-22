@@ -53,7 +53,8 @@ const GameRoom = () => {
     }
 
     const socketUrl =
-      process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
+      process.env.REACT_APP_SOCKET_URL ||
+      "https://realtimeticktockappserver-93we.onrender.com";
     console.log("GameRoom: Connecting to:", socketUrl);
 
     const newSocket = io(socketUrl, {

@@ -31,10 +31,10 @@ services:
     staticPublishPath: ./client/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://tictactoe-server.onrender.com/api
+        value: https://realtimeticktockappserver-93we.onrender.com/api
+      - key: REACT_APP_SOCKET_URL
+        value: https://realtimeticktockappserver-93we.onrender.com
 
 databases:
   - name: tictactoe-db
     plan: free
-
-

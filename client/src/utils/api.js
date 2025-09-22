@@ -7,7 +7,8 @@ import axios from "axios";
 class ApiClient {
   constructor() {
     const baseURL =
-      process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+      process.env.REACT_APP_API_URL ||
+      "https://realtimeticktockappserver-93we.onrender.com/api";
     console.log("API Client: Base URL configured as:", baseURL);
 
     this.client = axios.create({
