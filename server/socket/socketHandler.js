@@ -168,7 +168,6 @@ const socketHandler = (io, socket) => {
         game.status = "active";
         game.currentPlayer = game.player1; // Player1 starts
         await game.save();
-        console.log("JoinGame: Game status updated to active");
 
         // Refresh the game data after status update
         await game.populate(

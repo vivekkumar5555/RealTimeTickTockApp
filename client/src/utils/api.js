@@ -6,10 +6,7 @@ import axios from "axios";
  */
 class ApiClient {
   constructor() {
-    const baseURL =
-      process.env.REACT_APP_API_URL ||
-      "https://realtimeticktockappserver-93we.onrender.com/api";
-    console.log("API Client: Base URL configured as:", baseURL);
+    const baseURL = "https://realtimeticktockappserver-93we.onrender.com/api";
 
     this.client = axios.create({
       baseURL,
@@ -59,25 +56,10 @@ class ApiClient {
    * @returns {Promise<Object>} API response with user data and token
    */
   async register(credentials) {
-    console.log(
-      "API Client: Attempting registration with URL:",
-      this.client.defaults.baseURL + "/auth/register"
-    );
-    console.log("API Client: Registration credentials:", {
-      ...credentials,
-      password: "[HIDDEN]",
-    });
-
     try {
       const response = await this.client.post("/auth/register", credentials);
-      console.log("API Client: Registration successful:", response.data);
       return response.data;
     } catch (error) {
-      console.error("API Client: Registration failed:", error);
-      console.error(
-        "API Client: Full URL attempted:",
-        this.client.defaults.baseURL + "/auth/register"
-      );
       throw error;
     }
   }
@@ -117,13 +99,10 @@ class ApiClient {
    * @returns {Promise<Object>} API response with game data
    */
   async createGame() {
-    console.log("API Client: Creating game...");
     try {
       const response = await this.client.post("/games");
-      console.log("API Client: Game creation response:", response.data);
       return response.data;
     } catch (error) {
-      console.error("API Client: Game creation error:", error);
       throw error;
     }
   }
@@ -144,19 +123,10 @@ class ApiClient {
    * @returns {Promise<Object>} API response with game data
    */
   async getGame(roomId) {
-    console.log("API Client: Getting game with roomId:", roomId);
     try {
       const response = await this.client.get(`/games/${roomId}`);
-      console.log("API Client: Get game response:", response.data);
       return response.data;
     } catch (error) {
-      console.error("API Client: Get game error:", error);
-      console.error("API Client: Error details:", {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-        url: error.config?.url,
-      });
       throw error;
     }
   }
@@ -204,16 +174,10 @@ class ApiClient {
    * @returns {Promise<Object>} API response
    */
   async healthCheck() {
-    console.log(
-      "API Client: Checking server health at:",
-      this.client.defaults.baseURL + "/health"
-    );
     try {
       const response = await this.client.get("/health");
-      console.log("API Client: Health check successful:", response.data);
       return response.data;
     } catch (error) {
-      console.error("API Client: Health check failed:", error);
       throw error;
     }
   }

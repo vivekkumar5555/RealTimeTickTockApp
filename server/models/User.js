@@ -91,13 +91,6 @@ userSchema.methods.calculateWinRate = function () {
 
 // Update stats after game
 userSchema.methods.updateGameStats = async function (result) {
-  console.log(
-    `User ${this.username}: Updating game stats for result: ${result}`
-  );
-  console.log(
-    `User ${this.username}: Current stats - gamesPlayed: ${this.gamesPlayed}, gamesWon: ${this.gamesWon}, gamesLost: ${this.gamesLost}, gamesDrawn: ${this.gamesDrawn}`
-  );
-
   this.gamesPlayed += 1;
 
   switch (result) {
@@ -111,25 +104,15 @@ userSchema.methods.updateGameStats = async function (result) {
       this.gamesDrawn += 1;
       break;
     default:
-      console.error(`User ${this.username}: Invalid result type: ${result}`);
       throw new Error(`Invalid result type: ${result}`);
   }
 
   this.winRate = this.calculateWinRate();
 
-  console.log(
-    `User ${this.username}: Updated stats - gamesPlayed: ${this.gamesPlayed}, gamesWon: ${this.gamesWon}, gamesLost: ${this.gamesLost}, gamesDrawn: ${this.gamesDrawn}, winRate: ${this.winRate}`
-  );
-
   try {
     const savedUser = await this.save();
-    console.log(`User ${this.username}: Stats successfully saved to database`);
     return savedUser;
   } catch (error) {
-    console.error(
-      `User ${this.username}: Error saving stats to database:`,
-      error
-    );
     throw error;
   }
 };

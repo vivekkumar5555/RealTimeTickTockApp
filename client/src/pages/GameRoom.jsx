@@ -52,9 +52,7 @@ const GameRoom = () => {
       socketRef.current = null;
     }
 
-    const socketUrl =
-      process.env.REACT_APP_SOCKET_URL ||
-      "https://realtimeticktockappserver-93we.onrender.com";
+    const socketUrl = "https://realtimeticktockappserver-93we.onrender.com";
     console.log("GameRoom: Connecting to:", socketUrl);
 
     const newSocket = io(socketUrl, {
@@ -557,12 +555,6 @@ const GameRoom = () => {
   const isWinner = game.winner && game.winner._id === user.id;
   const isDraw = game.status === "finished" && !game.winner;
 
-  console.log("GameRoom: Game state:", {
-    currentPlayer: game.currentPlayer,
-    user: user.id,
-    isCurrentPlayer,
-    gameStatus,
-  });
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">

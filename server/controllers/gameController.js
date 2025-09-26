@@ -97,7 +97,6 @@ const createGame = async (req, res) => {
       player1: userId,
       currentPlayer: userId,
     });
-    console.log("Server: Game created:", game);
 
     await game.populate(
       "player1",

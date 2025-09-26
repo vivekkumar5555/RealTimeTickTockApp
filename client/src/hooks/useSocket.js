@@ -6,7 +6,6 @@ import { io } from "socket.io-client";
  * @returns {Object} Socket connection utilities
  */
 export const useSocket = () => {
-  console.log("=== useSocket hook initialized ===");
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef(null);
@@ -16,20 +15,12 @@ export const useSocket = () => {
    * Connect to the socket server
    */
   const connect = useCallback(() => {
-    console.log("=== CONNECT FUNCTION CALLED ===");
-    console.log("Connect called:", {
-      socketExists: !!socketRef.current,
-      socketConnected: socketRef.current?.connected,
-      connecting: connectingRef.current,
-    });
 
     if (socketRef.current?.connected) {
-      console.log("Socket already connected, skipping connection");
       return;
     }
 
     if (connectingRef.current) {
-      console.log("Socket connection already in progress, skipping");
       return;
     }
 
@@ -37,19 +28,13 @@ export const useSocket = () => {
 
     // Clean up existing socket if any
     if (socketRef.current) {
-      console.log("Cleaning up existing socket...");
       socketRef.current.disconnect();
       socketRef.current = null;
     }
 
-    const socketUrl =
-      process.env.REACT_APP_SOCKET_URL ||
-      "https://realtimeticktockappserver-93we.onrender.com";
-    console.log("Connecting to socket at:", socketUrl);
+    const socketUrl = "https://realtimeticktockappserver-93we.onrender.com";
 
     try {
-      console.log("Creating socket with URL:", socketUrl);
-      console.log("Socket.io library available:", typeof io);
       const newSocket = io(socketUrl, {
         transports: ["websocket", "polling"],
         autoConnect: true,

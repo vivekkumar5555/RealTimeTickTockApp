@@ -91,7 +91,6 @@ export const AuthProvider = ({ children }) => {
             payload: { user, token },
           });
         } catch (error) {
-          console.error("Error parsing stored user data:", error);
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           dispatch({ type: AUTH_ACTIONS.AUTH_FAILURE });
@@ -112,40 +111,19 @@ export const AuthProvider = ({ children }) => {
    */
   const login = async (credentials) => {
     try {
-      console.log("=== AUTH CONTEXT LOGIN ===");
-      console.log("AuthContext: Starting login process");
-      console.log("AuthContext: Credentials received:", credentials);
       dispatch({ type: AUTH_ACTIONS.AUTH_START });
-
-      console.log("AuthContext: Calling apiClient.login...");
       const response = await apiClient.login(credentials);
-      console.log("AuthContext: API response received", response);
 
       if (response.success && response.data) {
         const { user, token } = response.data;
-        console.log("AuthContext: User data extracted:", { user, token });
-
-        // Store in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        console.log("AuthContext: User data stored in localStorage");
-
         dispatch({ type: AUTH_ACTIONS.AUTH_SUCCESS, payload: { user, token } });
-        console.log("AuthContext: AUTH_SUCCESS dispatched");
         toast.success(`Welcome back, ${user.username}!`);
       } else {
-        console.log("AuthContext: Login failed - invalid response:", response);
         throw new Error(response.message || "Login failed");
       }
     } catch (error) {
-      console.error("=== AUTH CONTEXT LOGIN ERROR ===");
-      console.error("AuthContext: Login error", error);
-      console.error("AuthContext: Error details:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        stack: error.stack,
-      });
       dispatch({ type: AUTH_ACTIONS.AUTH_FAILURE });
       const message =
         error.response?.data?.message || error.message || "Login failed";
@@ -179,16 +157,10 @@ export const AuthProvider = ({ children }) => {
         // Store in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        console.log("AuthContext: User data stored in localStorage");
 
         dispatch({ type: AUTH_ACTIONS.AUTH_SUCCESS, payload: { user, token } });
-        console.log("AuthContext: AUTH_SUCCESS dispatched");
         toast.success(`Welcome to Tic-Tac-Toe, ${user.username}!`);
       } else {
-        console.log(
-          "AuthContext: Registration failed - invalid response:",
-          response
-        );
         throw new Error(response.message || "Registration failed");
       }
     } catch (error) {

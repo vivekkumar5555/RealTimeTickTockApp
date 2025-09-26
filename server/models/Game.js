@@ -98,13 +98,6 @@ gameSchema.methods.makeMove = function (playerId, row, col) {
   const isCurrentPlayer =
     currentPlayerId && currentPlayerId.toString() === playerId.toString();
 
-  console.log("Game.makeMove: Turn validation:", {
-    currentPlayer: this.currentPlayer,
-    currentPlayerId: currentPlayerId?.toString(),
-    playerId: playerId.toString(),
-    isCurrentPlayer,
-  });
-
   if (!isCurrentPlayer) {
     throw new Error("Not your turn");
   }
@@ -126,11 +119,14 @@ gameSchema.methods.makeMove = function (playerId, row, col) {
   const currentPlayerIdForSwitch =
     this.currentPlayer?._id || this.currentPlayer;
   const player1IdForSwitch = this.player1?._id || this.player1;
+  const player2IdForSwitch = this.player2?._id || this.player2;
+
+  // If current player is player1, switch to player2, otherwise switch to player1
   this.currentPlayer =
     currentPlayerIdForSwitch &&
     currentPlayerIdForSwitch.toString() === player1IdForSwitch.toString()
-      ? this.player2
-      : this.player1;
+      ? player2IdForSwitch
+      : player1IdForSwitch;
 
   return this;
 };
