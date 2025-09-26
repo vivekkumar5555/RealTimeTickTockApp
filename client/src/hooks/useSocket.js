@@ -15,7 +15,6 @@ export const useSocket = () => {
    * Connect to the socket server
    */
   const connect = useCallback(() => {
-
     if (socketRef.current?.connected) {
       return;
     }

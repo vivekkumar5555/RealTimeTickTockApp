@@ -169,10 +169,18 @@ const Header = () => {
             </div>
           ) : (
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/login")}
+              >
                 Sign In
               </Button>
-              <Button variant="primary" size="sm">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => navigate("/register")}
+              >
                 Sign Up
               </Button>
             </div>
